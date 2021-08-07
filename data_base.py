@@ -11,7 +11,8 @@ ll = {'id': 129, 'name': 'npc_dota_hero_mars', 'localized_name': 'Mars', 'primar
       '3_win': 16840, '4_pick': 39620, '4_win': 18945, '5_pick': 29048, '5_win': 13738, '6_pick': 15681, '6_win': 7555,
       '7_pick': 7716, '7_win': 3756, '8_pick': 2976, '8_win': 1394, 'null_pick': 1544841, 'null_win': 0}
 
-vv = {'id': 129, 'name': 'Mars', 'pick': 99999 }
+vv = {'''id': 129, "name": 'Mars', 'pick': 99999, 'win': 5555, 'winrate': 55.0, 'turbopick': 9999, 'turbowin': 5555, 'turbowinrate': 55.0, 'attr': 'str', 'img': '
+'''}
 
 conn = sqlite3.connect('Hero_base_turbo.db')
 cursor = conn.cursor()
@@ -25,7 +26,7 @@ cursor = conn.cursor()
 #                 turbopick INT,
 #                 turbowin INT,
 #                 turbowinrate REAL,
-#                 attr TEXT
+#                 attr TEXT,
 #                 img TEXT);""")
 
 
