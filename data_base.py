@@ -11,23 +11,29 @@ ll = {'id': 129, 'name': 'npc_dota_hero_mars', 'localized_name': 'Mars', 'primar
       '3_win': 16840, '4_pick': 39620, '4_win': 18945, '5_pick': 29048, '5_win': 13738, '6_pick': 15681, '6_win': 7555,
       '7_pick': 7716, '7_win': 3756, '8_pick': 2976, '8_win': 1394, 'null_pick': 1544841, 'null_win': 0}
 
+vv = {'id': 129, 'name': 'Mars', 'pick': 99999 }
+
 conn = sqlite3.connect('Hero_base_turbo.db')
 cursor = conn.cursor()
 
-c = cursor.execute("""CREATE TABLE heroes(
-                id INT PRIMARY KEY,
-                name TEXT,
-                turbopick INT,
-                turbowin INT,
-                winrate REAL,
-                primary_attr TEXT
-                img TEXT);""")
+# c = cursor.execute("""CREATE TABLE heroes(
+#                 id INT PRIMARY KEY,
+#                 name TEXT,
+#                 pick INT,
+#                 win INT,
+#                 winrate REAL,
+#                 turbopick INT,
+#                 turbowin INT,
+#                 turbowinrate REAL,
+#                 attr TEXT
+#                 img TEXT);""")
 
 
 def winrate_count(pick, win):
     winrate = win / pick
-    return winrate
+    format_winrate = '{:.1f}'.format(winrate * 100)
+    return format_winrate
 
-# id, localized_name, turbo_picks, turbo_wins, winrate,
 
-print(winrate_count(1000, 550))
+pool_getvalues = ['id', 'localized_name', 'pick', 'win', 'winrate', 'turbo_pick', 'turbo_win', 'turbowinrate', 'attr', 'img']
+
