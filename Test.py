@@ -1,10 +1,23 @@
+import json
 import sqlite3
 from sql import Database
 
 
+import time
+
+named_date = time.localtime()
+time_string = time.strftime('%d_%m_%Y_%H')
 
 
 
+se = open(f'text_responses_{time_string}.txt', 'r')
+
+with open(f'text_responses_{time_string}.txt') as f:
+      d = json.load(f)
+      print(d)
+
+
+test_request = d
 test_dict = {'id': 129, 'name': 'npc_dota_hero_mars', 'localized_name': 'Mars', 'primary_attr': 'str', 'attack_type': 'Melee',
       'roles': 'Carry', 'img': '/apps/dota2/images/heroes/mars_full.png?',
       'icon': '/apps/dota2/images/heroes/mars_icon.png', 'base_health': 200, 'base_health_regen': None, 'base_mana': 75,
@@ -21,4 +34,8 @@ pool_getvalues = ['id', 'localized_name', 'pick', 'win', 'winrate', 'turbo_pick'
 test_dict_sorted = {'id': 129, 'name': 'Mars', 'pick': 999, 'win': 555, 'winrate': 55.0, 'turbopick': 999, 'turbowin': 55,
       'turbowinrate': 55.0, 'attr': 'str', 'img': 'http//...'}
 
-s.co,
+
+for tt in test_request:
+      pass
+      #print(tt)
+
