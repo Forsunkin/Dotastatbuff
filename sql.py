@@ -33,4 +33,6 @@ class Database(object):
     def commit(self):
         self.connection.commit()
 
+emp = Database()
+emp.create_table()
 
