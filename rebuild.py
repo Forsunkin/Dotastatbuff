@@ -18,7 +18,7 @@ def games_counter(obj):
     keys_pick = ('1_pick', '2_pick', '3_pick', '4_pick', '5_pick', '6_pick', '7_pick')
     wins_public = (sum([obj[key] for key in obj if key in keys_win]))
     pick_public = (sum([obj[key] for key in obj if key in keys_pick]))
-    print(winrate_count(wins_public, pick_public))
+    return winrate_count(wins_public, pick_public)
 
 
 def strtosql(obj):

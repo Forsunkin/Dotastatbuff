@@ -1,6 +1,8 @@
 import json
 import sqlite3
 from sql import Database
+from dataclasses import dataclass
+
 
 import time
 
@@ -52,4 +54,29 @@ def games_counter(obj):
     print(winrate_count(wins_public, pick_public))
 
 
-games_counter(test_dict)
+@dataclass
+class Book:
+    id: int
+    localized_name: str
+    turbo_picks: int
+    turbowin: int
+    turbo_wins: int
+    primary_attr: str
+
+#
+# class Process:
+#
+#     def __init__(self):
+#         self.keys_win = ('1_win', '2_win', '3_win', '4_win', '5_win', '6_win', '7_win', '8_win')
+#         self.keys_pick = ('1_pick', '2_pick', '3_pick', '4_pick', '5_pick', '6_pick', '7_pick')
+#         self.pickpb = sum([self[key] for key in self if key in self.keys_pick])
+#         self.winpb = sum([self[key] for key in self if key in self.keys_win])
+#         self.wintratepb = '{:.1f}'.format((self.winpb / self.pickpb) * 100)
+#         self.picktb = self['turbo_picks']
+#         self.wintb = self['turbo_wins']
+#         self.witrateturbo = self.wintb / self.picktb
+#         self.id = self['id']
+#         self.name = self['localized_name']
+
+# emp = Process(test_dict)
+# test_dict.pickbp
