@@ -25,5 +25,7 @@ def strtosql(obj):
     for key in pool_getvalues:
         print(obj[key])
 
+def past(n,r):
+
 
 read_list(test_response)
