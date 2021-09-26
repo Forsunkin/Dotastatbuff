@@ -1,10 +1,29 @@
+from pydantic import BaseModel
 from testovoe import test_dict
 
-keys_win = ('1_win', '2_win', '3_win', '4_win', '5_win', '6_win', '7_win', '8_win')
-keys_pick = ('1_pick', '2_pick', '3_pick', '4_pick', '5_pick', '6_pick', '7_pick')
-def create(obj):
-    id = test_dict.get('id')
-    name = obj.get('localized_name')
+
+class Values(BaseModel):
+    id: int
+    localized_name = ''
+    turbo_picks = 0
+    turbo_wins = 0
+
+dict_with_values = Values(**test_dict)
+print(dict_with_values.id)
+print(dict_with_values.turbo_picks)
+print(dict_with_values.dict())
+
+
+def strip(obj):
+    ss = dict_with_values.id
+
+print()
+
+def create_simple_values(obj):
+    keys_win = ('1_win', '2_win', '3_win', '4_win', '5_win', '6_win', '7_win', '8_win')
+    keys_pick = ('1_pick', '2_pick', '3_pick', '4_pick', '5_pick', '6_pick', '7_pick')
+    id = 1
+    name =1
     picksinrating = sum([obj[key] for key in obj if key in keys_pick])
     winsinrating = sum([obj[key] for key in obj if key in keys_win])
     winrateinrating = '{:.1f}'.format((winsinrating / picksinrating) * 100)
@@ -16,4 +35,4 @@ def create(obj):
 
     print(id, name, picksinrating, winrateinrating, picksinturbo, winsinturbo, winrateinturbo, attr, img)
 
-create(test_dict)
+
