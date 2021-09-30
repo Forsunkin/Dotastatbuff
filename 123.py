@@ -1,23 +1,17 @@
-from pydantic import BaseModel
 from testovoe import test_dict
 
+#
+# class Values(BaseModel):
+#     id: int
+#     localized_name = ''
+#     turbo_picks = 0
+#     turbo_wins = 0
+#
+# dict_with_values = Values(**test_dict)
+# print(dict_with_values.id)
+# print(dict_with_values.turbo_picks)
+# print(dict_with_values.dict())
 
-class Values(BaseModel):
-    id: int
-    localized_name = ''
-    turbo_picks = 0
-    turbo_wins = 0
-
-dict_with_values = Values(**test_dict)
-print(dict_with_values.id)
-print(dict_with_values.turbo_picks)
-print(dict_with_values.dict())
-
-
-def strip(obj):
-    ss = dict_with_values.id
-
-print()
 
 def create_simple_values(obj):
     keys_win = ('1_win', '2_win', '3_win', '4_win', '5_win', '6_win', '7_win', '8_win')
@@ -35,4 +29,8 @@ def create_simple_values(obj):
 
     print(id, name, picksinrating, winrateinrating, picksinturbo, winsinturbo, winrateinturbo, attr, img)
 
+def ss(obj):
+    for s in obj:
+        create_simple_values(s)
 
+ss(test_dict)
