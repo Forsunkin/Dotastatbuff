@@ -2,6 +2,7 @@ pool_getvalues = ['id', 'localized_name', 'turbo_picks', 'turbo_wins', 'primary_
 
 test_dict_sorted = {'id': 129, 'name': 'Mars', 'pick': 999, 'win': 555, 'winrate': 55.0, 'turbopick': 999, 'turbowin': 55, 'turbowinrate': 55.0, 'attr': 'str', 'img': 'http//...'}
 
+
 test_dict = {'id': 129, 'name': 'npc_dota_hero_mars', 'localized_name': 'Mars', 'primary_attr': 'str', 'attack_type': 'Melee',
       'roles': 'Carry', 'img': '/apps/dota2/images/heroes/mars_full.png?',
       'icon': '/apps/dota2/images/heroes/mars_icon.png', 'base_health': 200, 'base_health_regen': None, 'base_mana': 75,
