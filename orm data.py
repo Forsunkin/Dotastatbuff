@@ -23,7 +23,7 @@ class Stata(Model):
 async def run(obj):
     keys_win = ('1_win', '2_win', '3_win', '4_win', '5_win', '6_win', '7_win', '8_win')
     keys_pick = ('1_pick', '2_pick', '3_pick', '4_pick', '5_pick', '6_pick', '7_pick')
-    id = obj.get('id')
+    hero_id = obj.get('id')
     name = obj.get('localized_name')
     picksinrating = sum([obj[key] for key in obj if key in keys_pick])
     winsinrating = sum([obj[key] for key in obj if key in keys_win])
@@ -39,7 +39,7 @@ async def run(obj):
     await Tortoise.generate_schemas()
 
 # Отправка переменных в базу
-    await Stata(id=id, name=name, picksinrating=picksinrating, winrateinrating=winrateinrating).save()
+    await Stata(hero_id = hero_id, name=name, picksinrating=picksinrating, winrateinrating=winrateinrating).save()
 
 
 if __name__ == "__main__":
