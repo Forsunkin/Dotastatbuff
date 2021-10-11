@@ -1,59 +1,64 @@
-# from tortoise.models import Model
-# from tortoise import Tortoise, fields, run_async
-# import asyncio
-# from tortoise.models import Model
-# from tortoise.transactions import in_transaction
-# from testovoe import test_dict
-#
-#
-# def create_simple_values(obj):
-#     keys_win = ('1_win', '2_win', '3_win', '4_win', '5_win', '6_win', '7_win', '8_win')
-#     keys_pick = ('1_pick', '2_pick', '3_pick', '4_pick', '5_pick', '6_pick', '7_pick')
-#     id = obj.get('id')
-#     name = obj.get('localized_name')
-#     picksinrating = sum([obj[key] for key in obj if key in keys_pick])
-#     winsinrating = sum([obj[key] for key in obj if key in keys_win])
-#     winrateinrating = '{:.1f}'.format((winsinrating / picksinrating) * 100)
-#     picksinturbo = obj.get('turbo_picks')
-#     winsinturbo = obj.get('turbo_wins')
-#     winrateinturbo = '{:.1f}'.format((winsinturbo / picksinturbo) * 100)
-#     attr = obj.get('primary_attr')
-#     img = obj.get('icon')
-#
-#     print(id, name, picksinrating, winrateinrating, picksinturbo, winsinturbo, winrateinturbo, attr, img)
-#
-#
-# class Stata(Model):
-#     id = fields.IntField(pk=True)
-#     name = fields.CharField(max_length=255)
-#     picksinrating = fields.IntField
-#     winsinrating = fields.IntField
-#     winrateinrating = fields.IntField
-#     picksinturbo = fields.IntField
-#     winsinturbo = fields.IntField
-#     winrateinturbo = fields.IntField
-#     attr = fields.CharField(max_length=255)
-#     img = fields.CharField(max_length=255)
-#
-#
-# pool_getvalues = ['id', 'localized_name', 'turbo_picks', 'turbo_wins', 'primary_attr', 'icon']
-#
-# test_dict_sorted = {'id': 129, 'name': 'Mars', 'picksinrating': 999, 'winsinrating': 555, 'winrateinrating': 55.0,
-#                     'picksinturbo': 999, 'winsinturbo': 55, 'winrateinturbo': 55.0, 'attr': 'str', 'img': 'http//...'}
-#
-#
-# async def paste(id, name, picksinrating, winsinrating, winrateinrating, picksinturbo, winsinturbo,
-#                winrateinturbo, attr, img):
-#
-#     await Tortoise.init(db_url='sqlite://data.db', modules={"models": ["__main__"]})
-#     await Tortoise.generate_schemas()
-#     conn = Tortoise.get_connection("default")
-#
-#     await conn.execute_query(f"""INSERT INTO STATA (id, name, picksinrating, winsinrating, winrateinrating,
-#                                 picksinturbo, winsinturbo, winrateinturbo, attr, img)
-#                             VALUES ({id}, {name}, {picksinrating}, {winsinrating}, {winrateinrating},
-#                                 {picksinturbo}, {winsinturbo}, {winrateinturbo}, {attr}, {img})""")
-#
-#
-# if __name__ == "__main__":
-#     asyncio.run(paste(**test_dict_sorted))
+from tortoise.models import Model
+from tortoise import Tortoise, fields, run_async
+import asyncio
+
+
+stringer = ''
+
+class Stata(Model):
+    id = fields.IntField(pk=True)
+    name = fields.CharField(max_length=255, null=True)
+    picksinrating = fields.IntField(null=True)
+    winsinrating = fields.IntField(null=True)
+    winrateinrating = fields.FloatField(null=True)
+    picksinturbo = fields.IntField(null=True)
+    winsinturbo = fields.IntField(null=True)
+    winrateinturbo = fields.FloatField(null=True)
+    attr = fields.CharField(max_length=255, null=True)
+    img = fields.CharField(max_length=255, null=True)
+
+
+async def run(obj):
+    keys_win = ('1_win', '2_win', '3_win', '4_win', '5_win', '6_win', '7_win', '8_win')
+    keys_pick = ('1_pick', '2_pick', '3_pick', '4_pick', '5_pick', '6_pick', '7_pick')
+    hero_id = obj.get('id')
+    name = obj.get('localized_name')
+    picksinrating = sum([obj[key] for key in obj if key in keys_pick])
+    winsinrating = sum([obj[key] for key in obj if key in keys_win])
+    winrateinrating = '{:.1f}'.format((winsinrating / picksinrating) * 100)
+    picksinturbo = obj.get('turbo_picks')
+    winsinturbo = obj.get('turbo_wins')
+    winrateinturbo = '{:.1f}'.format((winsinturbo / picksinturbo) * 100)
+    attr = obj.get('primary_attr')
+    img = obj.get('icon')
+
+    await Tortoise.init(db_url='sqlite://data2.db',
+                        modules={"models": ["__main__"]})
+    await Tortoise.generate_schemas()
+
+# Отправка переменных в базу
+    await Stata(hero_id=hero_id, name=name, picksinrating=picksinrating, winrateinrating=winrateinrating).save()
+
+
+def formattext(obj):
+    string = ''
+    for dict in obj:
+        name = (dict['name'])
+        wr = (dict['winrateinturbo'])
+        wr_formater = "{0:.2f}"
+        winrate = wr_formater.format(wr)
+        values = f'{name:25} -    {winrate:10}\n'
+        string = string + values
+    return string
+
+
+async def getturbo():
+    await Tortoise.init(db_url='sqlite://data2.db',
+                        modules={"models": ["__main__"]})
+    await Tortoise.generate_schemas()
+    result = await Stata.all().values('name', 'winrateinturbo')
+    return result
+
+
+if __name__ == '__main__':
+    asyncio.run(formattext(getturbo()))
