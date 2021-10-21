@@ -1,21 +1,11 @@
 from tortoise.models import Model
 from tortoise import Tortoise, fields, run_async
+from model import Stata
 import asyncio
-
 
 stringer = ''
 
-class Stata(Model):
-    id = fields.IntField(pk=True)
-    name = fields.CharField(max_length=255, null=True)
-    picksinrating = fields.IntField(null=True)
-    winsinrating = fields.IntField(null=True)
-    winrateinrating = fields.FloatField(null=True)
-    picksinturbo = fields.IntField(null=True)
-    winsinturbo = fields.IntField(null=True)
-    winrateinturbo = fields.FloatField(null=True)
-    attr = fields.CharField(max_length=255, null=True)
-    img = fields.CharField(max_length=255, null=True)
+
 
 
 async def run(obj):
@@ -33,13 +23,22 @@ async def run(obj):
     img = obj.get('icon')
 
     await Tortoise.init(db_url='sqlite://data2.db',
-                        modules={"models": ["__main__"]})
+                        modules={"models": ["model.py"]})
     await Tortoise.generate_schemas()
 
 # Отправка переменных в базу
     await Stata(hero_id=hero_id, name=name, picksinrating=picksinrating, winrateinrating=winrateinrating).save()
 
 
+# возвращает список со словорями, с ключами по типу: [{'name': 'Io', 'winrateinturbo': 45.7278810151158},{...}]
+async def getturbo():
+    await Tortoise.init(db_url='sqlite://data2.db',
+                        modules={"models": ['data.py']})
+    await Tortoise.generate_schemas()
+    result = await Stata.all().values('name', 'winrateinturbo')
+    return result
+
+# форматирует список словарей в
 def formattext(obj):
     string = ''
     for dict in obj:
@@ -52,13 +51,6 @@ def formattext(obj):
     return string
 
 
-async def getturbo():
-    await Tortoise.init(db_url='sqlite://data2.db',
-                        modules={"models": ["__main__"]})
-    await Tortoise.generate_schemas()
-    result = await Stata.all().values('name', 'winrateinturbo')
-    return result
 
-
-if __name__ == '__main__':
-    asyncio.run(formattext(getturbo()))
+# if __name__ == '__main__':
+asyncio.run(getturbo())

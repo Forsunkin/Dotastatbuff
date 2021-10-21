@@ -1,16 +1,14 @@
 from keys import telegram_token as token
-import sqlite3
 import telebot
-import asyncio
 from telebot import types
-from data import turbo_values as turbo_str
+from data import turbo_values as turbo_values
 
 bot = telebot.TeleBot(token)
 
 
 @bot.message_handler(commands=['turbo'])
 def start_message(message):
-	bot.send_message(message.chat.id, turbo_str)
+	bot.send_message(message.chat.id, turbo_values)
 
 
 @bot.message_handler(commands=['button'])
